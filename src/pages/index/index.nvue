@@ -1,0 +1,62 @@
+<template lang="pug">
+view.page
+  view.group(v-for="group in menuGroups")
+    view.title
+      text.title-text {{group.title}} 
+    me-grid(:data="group.menus" :row="2" :space="8" :runSpace="8")
+      template(#item='{item}')
+        view.menu-card(@click="onMenu(item)")
+          text {{item.name}}
+</template>
+
+<script setup lang="ts">
+import 
+import { ref } from 'vue'
+const menuGroups: MenuGroup[] = [{
+  title: '销售系统',
+  menus: [
+    { name: '库存统计', path: '/pages/stock/stock' }
+  ]
+}, {
+  title: '管易系统',
+  menus: [
+    { name: '订单播种', path: '/pages/gyerp/wave/wave' }
+  ]
+}]
+function onMenu(menu: Menu) {
+  console.log(menu)
+  uni.navigateTo({ url: menu.path })
+}
+interface MenuGroup {
+  title: string
+  menus: Menu[]
+}
+interface Menu {
+  name: string
+  path: string
+}
+</script>
+
+<style lang="scss">
+.page {
+  flex: 1;
+  padding: 0 8px;
+}
+.group {
+  padding-top: 4px;
+  padding-bottom: 8px;
+  .title {
+    .title-text {
+      font-size: 12px;
+      color: #555;
+    }
+    margin-bottom: 8px;
+  }
+  
+  .menu-card {
+    padding: 8px;
+    border-radius: 8px;
+    background: rgb(249, 160, 220);
+  }
+}
+</style>
